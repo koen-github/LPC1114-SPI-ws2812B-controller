@@ -1,0 +1,132 @@
+\hypertarget{dallas__one__wire_8h}{}\section{C\+:/bmptk/examples/v1th04/\+Koen\+Library/dallas\+\_\+one\+\_\+wire.h File Reference}
+\label{dallas__one__wire_8h}\index{C\+:/bmptk/examples/v1th04/\+Koen\+Library/dallas\+\_\+one\+\_\+wire.\+h@{C\+:/bmptk/examples/v1th04/\+Koen\+Library/dallas\+\_\+one\+\_\+wire.\+h}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{dallas__one__wire_8h_a7e1bcbd8d4e8281101e7392d95e3b4cb}{}void \hyperlink{dallas__one__wire_8h_a7e1bcbd8d4e8281101e7392d95e3b4cb}{ds\+\_\+pin\+\_\+init} (unsigned int port, unsigned int pin)\label{dallas__one__wire_8h_a7e1bcbd8d4e8281101e7392d95e3b4cb}
+
+\begin{DoxyCompactList}\small\item\em This function sets the using pin number for the dallas one wire. \end{DoxyCompactList}\item 
+void \hyperlink{dallas__one__wire_8h_ae446a7f3f3d2cbf3ba67b714b3685316}{ds\+\_\+pin\+\_\+set} (unsigned char x)
+\begin{DoxyCompactList}\small\item\em Make dallas pin high or low. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{dallas__one__wire_8h_ae676e574a91ba84f42a9f3c9c02fd542}{ds\+\_\+pin\+\_\+get} ()
+\begin{DoxyCompactList}\small\item\em Return value of dallas pin. \end{DoxyCompactList}\item 
+void \hyperlink{dallas__one__wire_8h_a950e0941c4ca38de151780e6361aedc7}{ds\+\_\+pin\+\_\+pulse} (unsigned long long int t)
+\begin{DoxyCompactList}\small\item\em Give pulse of low and high. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{dallas__one__wire_8h_a22854e243dbb8b503f1063a369b2cf70}{ds\+\_\+present} ()
+\begin{DoxyCompactList}\small\item\em Check to see if dallas is present. \end{DoxyCompactList}\item 
+void \hyperlink{dallas__one__wire_8h_ae954e5ccf4167533c3acca85f25a9c95}{ds\+\_\+send\+\_\+bit} (unsigned char b)
+\begin{DoxyCompactList}\small\item\em Dallas send bit. \end{DoxyCompactList}\item 
+void \hyperlink{dallas__one__wire_8h_a5d4840acde88df6ee155dd47e15e0507}{ds\+\_\+send\+\_\+byte} (unsigned char b)
+\begin{DoxyCompactList}\small\item\em Dallas send byte. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{dallas__one__wire_8h_a8c33f2dee1338027575416fc2d497d5e}{ds\+\_\+receive\+\_\+bit} (void)
+\begin{DoxyCompactList}\small\item\em Receive dallas one bit. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{dallas__one__wire_8h_acad4cf39f1eb304b1137c5490a5b9d0b}{ds\+\_\+receive\+\_\+byte} ()
+\begin{DoxyCompactList}\small\item\em Receive byte of dallas one wire. \end{DoxyCompactList}\item 
+void \hyperlink{dallas__one__wire_8h_a3ee14087e1180052fc97d49bc1f54d8d}{ds1990\+\_\+id\+\_\+print} ()
+\begin{DoxyCompactList}\small\item\em Print id of one wire. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Configure dallas one wire pin 
+
+\subsection{Function Documentation}
+\hypertarget{dallas__one__wire_8h_a3ee14087e1180052fc97d49bc1f54d8d}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds1990\+\_\+id\+\_\+print@{ds1990\+\_\+id\+\_\+print}}
+\index{ds1990\+\_\+id\+\_\+print@{ds1990\+\_\+id\+\_\+print}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds1990\+\_\+id\+\_\+print}]{\setlength{\rightskip}{0pt plus 5cm}void ds1990\+\_\+id\+\_\+print (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_a3ee14087e1180052fc97d49bc1f54d8d}
+
+
+Print id of one wire. 
+
+This function can receive the serial number of the dallas one. \hypertarget{dallas__one__wire_8h_ae676e574a91ba84f42a9f3c9c02fd542}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds\+\_\+pin\+\_\+get@{ds\+\_\+pin\+\_\+get}}
+\index{ds\+\_\+pin\+\_\+get@{ds\+\_\+pin\+\_\+get}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds\+\_\+pin\+\_\+get}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char ds\+\_\+pin\+\_\+get (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_ae676e574a91ba84f42a9f3c9c02fd542}
+
+
+Return value of dallas pin. 
+
+This function can return the value of the dallas pin. \hypertarget{dallas__one__wire_8h_a950e0941c4ca38de151780e6361aedc7}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds\+\_\+pin\+\_\+pulse@{ds\+\_\+pin\+\_\+pulse}}
+\index{ds\+\_\+pin\+\_\+pulse@{ds\+\_\+pin\+\_\+pulse}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds\+\_\+pin\+\_\+pulse}]{\setlength{\rightskip}{0pt plus 5cm}void ds\+\_\+pin\+\_\+pulse (
+\begin{DoxyParamCaption}
+\item[{unsigned long long int}]{t}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_a950e0941c4ca38de151780e6361aedc7}
+
+
+Give pulse of low and high. 
+
+This function can give a pulse to the output pin, using a specific time. \hypertarget{dallas__one__wire_8h_ae446a7f3f3d2cbf3ba67b714b3685316}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds\+\_\+pin\+\_\+set@{ds\+\_\+pin\+\_\+set}}
+\index{ds\+\_\+pin\+\_\+set@{ds\+\_\+pin\+\_\+set}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds\+\_\+pin\+\_\+set}]{\setlength{\rightskip}{0pt plus 5cm}void ds\+\_\+pin\+\_\+set (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{x}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_ae446a7f3f3d2cbf3ba67b714b3685316}
+
+
+Make dallas pin high or low. 
+
+This function set the dallas pin high or low. \hypertarget{dallas__one__wire_8h_a22854e243dbb8b503f1063a369b2cf70}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds\+\_\+present@{ds\+\_\+present}}
+\index{ds\+\_\+present@{ds\+\_\+present}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds\+\_\+present}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char ds\+\_\+present (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_a22854e243dbb8b503f1063a369b2cf70}
+
+
+Check to see if dallas is present. 
+
+This function can check if the dallas one wire is present. \hypertarget{dallas__one__wire_8h_a8c33f2dee1338027575416fc2d497d5e}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds\+\_\+receive\+\_\+bit@{ds\+\_\+receive\+\_\+bit}}
+\index{ds\+\_\+receive\+\_\+bit@{ds\+\_\+receive\+\_\+bit}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds\+\_\+receive\+\_\+bit}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char ds\+\_\+receive\+\_\+bit (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_a8c33f2dee1338027575416fc2d497d5e}
+
+
+Receive dallas one bit. 
+
+This function receives a bit of the dallas one wire. \hypertarget{dallas__one__wire_8h_acad4cf39f1eb304b1137c5490a5b9d0b}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds\+\_\+receive\+\_\+byte@{ds\+\_\+receive\+\_\+byte}}
+\index{ds\+\_\+receive\+\_\+byte@{ds\+\_\+receive\+\_\+byte}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds\+\_\+receive\+\_\+byte}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char ds\+\_\+receive\+\_\+byte (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_acad4cf39f1eb304b1137c5490a5b9d0b}
+
+
+Receive byte of dallas one wire. 
+
+This function can receive a byte from the dallas one wire. \hypertarget{dallas__one__wire_8h_ae954e5ccf4167533c3acca85f25a9c95}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds\+\_\+send\+\_\+bit@{ds\+\_\+send\+\_\+bit}}
+\index{ds\+\_\+send\+\_\+bit@{ds\+\_\+send\+\_\+bit}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds\+\_\+send\+\_\+bit}]{\setlength{\rightskip}{0pt plus 5cm}void ds\+\_\+send\+\_\+bit (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{b}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_ae954e5ccf4167533c3acca85f25a9c95}
+
+
+Dallas send bit. 
+
+This function sends a specific bit to the dallas one wire. \hypertarget{dallas__one__wire_8h_a5d4840acde88df6ee155dd47e15e0507}{}\index{dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}!ds\+\_\+send\+\_\+byte@{ds\+\_\+send\+\_\+byte}}
+\index{ds\+\_\+send\+\_\+byte@{ds\+\_\+send\+\_\+byte}!dallas\+\_\+one\+\_\+wire.\+h@{dallas\+\_\+one\+\_\+wire.\+h}}
+\subsubsection[{ds\+\_\+send\+\_\+byte}]{\setlength{\rightskip}{0pt plus 5cm}void ds\+\_\+send\+\_\+byte (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{b}
+\end{DoxyParamCaption}
+)}\label{dallas__one__wire_8h_a5d4840acde88df6ee155dd47e15e0507}
+
+
+Dallas send byte. 
+
+This function sends a byte to the dallas one wire. 

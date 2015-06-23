@@ -1,0 +1,86 @@
+\hypertarget{sw-uart_8h}{}\section{C\+:/bmptk/examples/v1th04/\+Koen\+Library/sw-\/uart.h File Reference}
+\label{sw-uart_8h}\index{C\+:/bmptk/examples/v1th04/\+Koen\+Library/sw-\/uart.\+h@{C\+:/bmptk/examples/v1th04/\+Koen\+Library/sw-\/uart.\+h}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{sw-uart_8h_a0c0ca72359ddf28dcd15900dfba19343}{uart\+\_\+init} (void)
+\begin{DoxyCompactList}\small\item\em initialize the U\+A\+R\+T \end{DoxyCompactList}\item 
+void \hyperlink{sw-uart_8h_a360a5c07525e327a80e6e11602832292}{uart\+\_\+put\+\_\+char} (char c)
+\begin{DoxyCompactList}\small\item\em write a single character \end{DoxyCompactList}\item 
+void \hyperlink{sw-uart_8h_a83d7ce6de1ab92205be5abf28e05130b}{uart\+\_\+put\+\_\+string} (char $\ast$s)
+\begin{DoxyCompactList}\small\item\em write a character string \end{DoxyCompactList}\item 
+void \hyperlink{sw-uart_8h_a0a34aabcb67f5524a6d4d4235139da6b}{uart\+\_\+put\+\_\+int\+\_\+decimal} (int x)
+\begin{DoxyCompactList}\small\item\em writes an integer in decimal format without leading zero\textquotesingle{}s. \end{DoxyCompactList}\item 
+void \hyperlink{sw-uart_8h_aaf97260d62f356f699fb3f779b07566b}{uart\+\_\+put\+\_\+int\+\_\+hexadecimal} (unsigned int x, int n)
+\begin{DoxyCompactList}\small\item\em writes an unsigend integer as n hexadecimal digits \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This library implements a bit-\/banged output-\/only U\+A\+R\+T at the baudrate specified by B\+M\+P\+T\+K\+\_\+\+B\+A\+U\+D\+R\+A\+T\+E. 
+
+\subsection{Function Documentation}
+\hypertarget{sw-uart_8h_a0c0ca72359ddf28dcd15900dfba19343}{}\index{sw-\/uart.\+h@{sw-\/uart.\+h}!uart\+\_\+init@{uart\+\_\+init}}
+\index{uart\+\_\+init@{uart\+\_\+init}!sw-\/uart.\+h@{sw-\/uart.\+h}}
+\subsubsection[{uart\+\_\+init}]{\setlength{\rightskip}{0pt plus 5cm}void uart\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\label{sw-uart_8h_a0c0ca72359ddf28dcd15900dfba19343}
+
+
+initialize the U\+A\+R\+T 
+
+Call this function to initialize the U\+A\+R\+T pins. \hypertarget{sw-uart_8h_a360a5c07525e327a80e6e11602832292}{}\index{sw-\/uart.\+h@{sw-\/uart.\+h}!uart\+\_\+put\+\_\+char@{uart\+\_\+put\+\_\+char}}
+\index{uart\+\_\+put\+\_\+char@{uart\+\_\+put\+\_\+char}!sw-\/uart.\+h@{sw-\/uart.\+h}}
+\subsubsection[{uart\+\_\+put\+\_\+char}]{\setlength{\rightskip}{0pt plus 5cm}void uart\+\_\+put\+\_\+char (
+\begin{DoxyParamCaption}
+\item[{char}]{c}
+\end{DoxyParamCaption}
+)}\label{sw-uart_8h_a360a5c07525e327a80e6e11602832292}
+
+
+write a single character 
+
+This function writes a single character using the standard U\+A\+R\+T output pin of the chip (G\+P1\+\_\+7) and the baudrate B\+M\+P\+T\+K\+\_\+\+B\+A\+U\+D\+R\+A\+T\+E, which is passed as a command line argument during compilation. \hypertarget{sw-uart_8h_a0a34aabcb67f5524a6d4d4235139da6b}{}\index{sw-\/uart.\+h@{sw-\/uart.\+h}!uart\+\_\+put\+\_\+int\+\_\+decimal@{uart\+\_\+put\+\_\+int\+\_\+decimal}}
+\index{uart\+\_\+put\+\_\+int\+\_\+decimal@{uart\+\_\+put\+\_\+int\+\_\+decimal}!sw-\/uart.\+h@{sw-\/uart.\+h}}
+\subsubsection[{uart\+\_\+put\+\_\+int\+\_\+decimal}]{\setlength{\rightskip}{0pt plus 5cm}void uart\+\_\+put\+\_\+int\+\_\+decimal (
+\begin{DoxyParamCaption}
+\item[{int}]{x}
+\end{DoxyParamCaption}
+)}\label{sw-uart_8h_a0a34aabcb67f5524a6d4d4235139da6b}
+
+
+writes an integer in decimal format without leading zero\textquotesingle{}s. 
+
+This function writes an integer in decimal format, without any leading zero\textquotesingle{}s, using using \hyperlink{sw-uart_8h_a360a5c07525e327a80e6e11602832292}{uart\+\_\+put\+\_\+char()}. A negative value will have a \textquotesingle{}-\/\textquotesingle{} in front of it. Writing I\+N\+T\+\_\+\+M\+I\+N will not work as expected.
+
+writes an integer in decimal format without leading zero\textquotesingle{}s.
+
+This function writes a decimal number to U\+A\+R\+T using \hyperlink{sw-uart_8h_a360a5c07525e327a80e6e11602832292}{uart\+\_\+put\+\_\+char()}. \hypertarget{sw-uart_8h_aaf97260d62f356f699fb3f779b07566b}{}\index{sw-\/uart.\+h@{sw-\/uart.\+h}!uart\+\_\+put\+\_\+int\+\_\+hexadecimal@{uart\+\_\+put\+\_\+int\+\_\+hexadecimal}}
+\index{uart\+\_\+put\+\_\+int\+\_\+hexadecimal@{uart\+\_\+put\+\_\+int\+\_\+hexadecimal}!sw-\/uart.\+h@{sw-\/uart.\+h}}
+\subsubsection[{uart\+\_\+put\+\_\+int\+\_\+hexadecimal}]{\setlength{\rightskip}{0pt plus 5cm}void uart\+\_\+put\+\_\+int\+\_\+hexadecimal (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{x, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}\label{sw-uart_8h_aaf97260d62f356f699fb3f779b07566b}
+
+
+writes an unsigend integer as n hexadecimal digits 
+
+This function writes an unsigend integer as n hexadecimal (0-\/\+F) digits. Digits higher than n will be ignored.
+
+writes an unsigend integer as n hexadecimal digits
+
+This function writes int number as hexadecimal to U\+A\+R\+T using \hyperlink{sw-uart_8h_a360a5c07525e327a80e6e11602832292}{uart\+\_\+put\+\_\+char()}. \hypertarget{sw-uart_8h_a83d7ce6de1ab92205be5abf28e05130b}{}\index{sw-\/uart.\+h@{sw-\/uart.\+h}!uart\+\_\+put\+\_\+string@{uart\+\_\+put\+\_\+string}}
+\index{uart\+\_\+put\+\_\+string@{uart\+\_\+put\+\_\+string}!sw-\/uart.\+h@{sw-\/uart.\+h}}
+\subsubsection[{uart\+\_\+put\+\_\+string}]{\setlength{\rightskip}{0pt plus 5cm}void uart\+\_\+put\+\_\+string (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}\label{sw-uart_8h_a83d7ce6de1ab92205be5abf28e05130b}
+
+
+write a character string 
+
+This function writes the characters of a standard 0-\/terminated string using \hyperlink{sw-uart_8h_a360a5c07525e327a80e6e11602832292}{uart\+\_\+put\+\_\+char()}. 

@@ -1,0 +1,69 @@
+\hypertarget{pin__functions_8h}{}\section{C\+:/bmptk/examples/v1th04/\+Koen\+Library/pin\+\_\+functions.h File Reference}
+\label{pin__functions_8h}\index{C\+:/bmptk/examples/v1th04/\+Koen\+Library/pin\+\_\+functions.\+h@{C\+:/bmptk/examples/v1th04/\+Koen\+Library/pin\+\_\+functions.\+h}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{pin__functions_8h_a0d0dfb00c724a429e94299ff52c4a09f}{pin\+\_\+configure\+\_\+as\+\_\+input} (int port, int pin)
+\begin{DoxyCompactList}\small\item\em Configure pin as input. \end{DoxyCompactList}\item 
+void \hyperlink{pin__functions_8h_ab92757d11ad65831a85b9e49fc791872}{pin\+\_\+configure\+\_\+as\+\_\+output} (int port, int pin)
+\begin{DoxyCompactList}\small\item\em Configure pin as output. \end{DoxyCompactList}\item 
+void \hyperlink{pin__functions_8h_afda95145d3fe90030d0169bb4786a098}{pin\+\_\+set} (int port, int pin, unsigned char x)
+\begin{DoxyCompactList}\small\item\em Set pin low or high. \end{DoxyCompactList}\item 
+unsigned char \hyperlink{pin__functions_8h_a820440b4e93223fecdfff29dc25428f5}{pin\+\_\+get} (int port, int pin)
+\begin{DoxyCompactList}\small\item\em Return the pin status. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A lot of used pin functions so you can easily configure pins as input or output. 
+
+\subsection{Function Documentation}
+\hypertarget{pin__functions_8h_a0d0dfb00c724a429e94299ff52c4a09f}{}\index{pin\+\_\+functions.\+h@{pin\+\_\+functions.\+h}!pin\+\_\+configure\+\_\+as\+\_\+input@{pin\+\_\+configure\+\_\+as\+\_\+input}}
+\index{pin\+\_\+configure\+\_\+as\+\_\+input@{pin\+\_\+configure\+\_\+as\+\_\+input}!pin\+\_\+functions.\+h@{pin\+\_\+functions.\+h}}
+\subsubsection[{pin\+\_\+configure\+\_\+as\+\_\+input}]{\setlength{\rightskip}{0pt plus 5cm}void pin\+\_\+configure\+\_\+as\+\_\+input (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{int}]{pin}
+\end{DoxyParamCaption}
+)}\label{pin__functions_8h_a0d0dfb00c724a429e94299ff52c4a09f}
+
+
+Configure pin as input. 
+
+This function sets the given pin as input pin. \hypertarget{pin__functions_8h_ab92757d11ad65831a85b9e49fc791872}{}\index{pin\+\_\+functions.\+h@{pin\+\_\+functions.\+h}!pin\+\_\+configure\+\_\+as\+\_\+output@{pin\+\_\+configure\+\_\+as\+\_\+output}}
+\index{pin\+\_\+configure\+\_\+as\+\_\+output@{pin\+\_\+configure\+\_\+as\+\_\+output}!pin\+\_\+functions.\+h@{pin\+\_\+functions.\+h}}
+\subsubsection[{pin\+\_\+configure\+\_\+as\+\_\+output}]{\setlength{\rightskip}{0pt plus 5cm}void pin\+\_\+configure\+\_\+as\+\_\+output (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{int}]{pin}
+\end{DoxyParamCaption}
+)}\label{pin__functions_8h_ab92757d11ad65831a85b9e49fc791872}
+
+
+Configure pin as output. 
+
+This function sets the given pin as output pin. \hypertarget{pin__functions_8h_a820440b4e93223fecdfff29dc25428f5}{}\index{pin\+\_\+functions.\+h@{pin\+\_\+functions.\+h}!pin\+\_\+get@{pin\+\_\+get}}
+\index{pin\+\_\+get@{pin\+\_\+get}!pin\+\_\+functions.\+h@{pin\+\_\+functions.\+h}}
+\subsubsection[{pin\+\_\+get}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char pin\+\_\+get (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{int}]{pin}
+\end{DoxyParamCaption}
+)}\label{pin__functions_8h_a820440b4e93223fecdfff29dc25428f5}
+
+
+Return the pin status. 
+
+This function returns low or high with the given pin number \hypertarget{pin__functions_8h_afda95145d3fe90030d0169bb4786a098}{}\index{pin\+\_\+functions.\+h@{pin\+\_\+functions.\+h}!pin\+\_\+set@{pin\+\_\+set}}
+\index{pin\+\_\+set@{pin\+\_\+set}!pin\+\_\+functions.\+h@{pin\+\_\+functions.\+h}}
+\subsubsection[{pin\+\_\+set}]{\setlength{\rightskip}{0pt plus 5cm}void pin\+\_\+set (
+\begin{DoxyParamCaption}
+\item[{int}]{port, }
+\item[{int}]{pin, }
+\item[{unsigned char}]{x}
+\end{DoxyParamCaption}
+)}\label{pin__functions_8h_afda95145d3fe90030d0169bb4786a098}
+
+
+Set pin low or high. 
+
+This function sets the given pin to low or high 
