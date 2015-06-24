@@ -48,8 +48,10 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -226,6 +228,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button13);
             this.groupBox3.Controls.Add(this.button12);
             this.groupBox3.Controls.Add(this.button9);
             this.groupBox3.Controls.Add(this.button8);
@@ -237,6 +240,26 @@
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Animations";
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(127, 53);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(67, 23);
+            this.button13.TabIndex = 11;
+            this.button13.Text = "AMBILIGHT";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(6, 53);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(67, 23);
+            this.button12.TabIndex = 10;
+            this.button12.Text = "CYCLE";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // groupBox4
             // 
@@ -250,21 +273,22 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "LPC1114 Controls";
             // 
-            // button12
+            // label2
             // 
-            this.button12.Location = new System.Drawing.Point(6, 53);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(67, 23);
-            this.button12.TabIndex = 10;
-            this.button12.Text = "CYCLE";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Green;
+            this.label2.Location = new System.Drawing.Point(15, 281);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(130, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "PRESS RESET BUTTON";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(463, 303);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -278,6 +302,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -304,6 +329,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button13;
     }
 }
 

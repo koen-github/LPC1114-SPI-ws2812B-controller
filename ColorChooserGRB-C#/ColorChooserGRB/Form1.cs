@@ -27,20 +27,18 @@ namespace ColorChooserGRB
         static bool mus;
         static bool blinkingDownOrUp;
         static bool clicked = false;
-        static int intensity = 141;
-        SerialPort LPC1114 = new SerialPort("COM4", 38400);
+        static int intensity = 141; //default start value for intensity
+        public static SerialPort LPC1114 = new SerialPort("COM4", 38400); //connection to LPC1114
         static String textLPC = "";
         static Color prevColor;
-        Bitmap screenPixel = new Bitmap(1, 1, PixelFormat.Format32bppArgb);
-        static ColoRand ts = new ColoRand();
+        Bitmap screenPixel = new Bitmap(1, 1, PixelFormat.Format32bppArgb); //current color located under cursor
+        static ColoRand ts = new ColoRand(); //generate random color
         List<Color> currentColor = new List<Color>();
         static bool cycleColor = false;
-
-
+        static Label connectionMessage;
         static Color cycleColorOne;
         static Color cycleColorTwo;
         int startpos = 0;
-
         int NUMBER_OF_LEDS = 59;
         String theColor;
         byte[] colorBytes = new byte[3];
@@ -49,8 +47,20 @@ namespace ColorChooserGRB
         public Form1()
         {
             InitializeComponent();
+
+
+            connectionMessage = label2;
             LPC1114.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-            LPC1114.Open();
+
+            try
+            {
+                LPC1114.Open();
+            }
+            catch (System.IO.IOException e)
+            {
+                MessageBox.Show("Connect LPC1114 programmer on COM4");
+            }
+            
             trackBar1.MouseDown += (s,
                                     e) =>
             {
@@ -66,24 +76,11 @@ namespace ColorChooserGRB
                 change_brightness(trackBar1.Value);
             };
 
-            while (true)
-            {
-                if (textLPC.Contains("LPC1114"))
-                {
-                    MessageBox.Show("Connected with LPC1114");
-                    break;
-                }
-            }
+            //background worker to do things apart from the GUI
             m_oWorker = new BackgroundWorker();
-            // Create a background worker thread that ReportsProgress &
-            // SupportsCancellation
-            // Hook up the appropriate events.
             m_oWorker.DoWork += new DoWorkEventHandler(m_oWorker_DoWork);
-            m_oWorker.WorkerReportsProgress = false;
+            m_oWorker.WorkerReportsProgress = false; //useless
             m_oWorker.WorkerSupportsCancellation = true;
-
-
-
         }
 
         public static Color ChangeColorBrightness(Color color, float correctionFactor)
@@ -114,7 +111,7 @@ namespace ColorChooserGRB
         {
             if (!clicked)
             {
-                float normalized_value = ((value - 0f) / (255f - 0f)) * (1f - -1f) + -1f;
+                float normalized_value = ((value - 0f) / (255f - 0f)) * (1f - -1f) + -1f; //generate value between -1 and 1, from range 0 to 255
 
                 List<Color> modiCols = new List<Color>();
                 if (currentColor != null)
@@ -148,15 +145,20 @@ namespace ColorChooserGRB
         }
 
 
-        private static void DataReceivedHandler(
-                        object sender,
-                        SerialDataReceivedEventArgs e)
+        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort sp = (SerialPort)sender;
 
             string indata = sp.ReadExisting();
             textLPC = indata;
-            // MessageBox.Show("The text was: " + indata);
+
+            if (textLPC.Contains("LPC1114"))
+            {
+                connectionMessage.ForeColor = Color.Blue;
+                Action updateLabel = () => connectionMessage.Text = "CONNECTED";
+                connectionMessage.Invoke(updateLabel);
+
+            }
         }
 
         private void write_color_stream(List<Color> theCols)
@@ -221,7 +223,7 @@ namespace ColorChooserGRB
             return colorList;
         }
 
-
+        //set single color
         private void button2_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
@@ -233,6 +235,7 @@ namespace ColorChooserGRB
             }
         }
 
+        //set gradient color
         private void button3_Click(object sender, EventArgs e)
         {
 
@@ -247,14 +250,11 @@ namespace ColorChooserGRB
                     currentColor = colooren;
                     write_color_stream(colooren);
                 }
-
-
             }
-
         }
 
 
-
+        //set random gradient color
         private void button4_Click(object sender, EventArgs e)
         {
             Color one = ts.RandomColor();
@@ -269,10 +269,7 @@ namespace ColorChooserGRB
         {
             button5.Enabled = false;
             button6.Enabled = true;
-
-            // Kickoff the worker thread to begin it's DoWork function.
-
-            m_oWorker.RunWorkerAsync();
+            m_oWorker.RunWorkerAsync(); //start background worker, let the show begin..
         }
 
         void m_oWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -311,15 +308,24 @@ namespace ColorChooserGRB
                 {
 
                     List<Color> colooren = new List<Color>();
-                    
+
                     int otherLeds = 10;
-                    if (startpos + otherLeds == NUMBER_OF_LEDS-1)
+                    if (startpos + otherLeds == NUMBER_OF_LEDS)
                     {
-                        startpos = 0;
+                        blinkingDownOrUp = false;
+                    }
+                    if (startpos == 0)
+                    {
+                        blinkingDownOrUp = true;
+                    }
+
+                    if (blinkingDownOrUp)
+                    {
+                        startpos++;
                     }
                     else
                     {
-                        startpos++;
+                        startpos--;
                     }
                     for (int i = 0; i < NUMBER_OF_LEDS; i++)
                     {
@@ -421,11 +427,18 @@ namespace ColorChooserGRB
 
         private void button11_Click(object sender, EventArgs e)
         {
+            connectionMessage.ForeColor = Color.Red;
+            Action updateLabel = () => connectionMessage.Text = "NOT CONNECTED";
+            connectionMessage.Invoke(updateLabel);
             LPC1114.Close();
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
+            connectionMessage.ForeColor = Color.Green;
+            Action updateLabel = () => connectionMessage.Text = "PRESS RESET BUTTON";
+            connectionMessage.Invoke(updateLabel);
+            LPC1114.Close();
             LPC1114.Open();
         }
 
@@ -468,6 +481,13 @@ namespace ColorChooserGRB
                     cycleColor = false;
                 }
             }
+        }
+
+        //Open form2, and enable AmbiLight possibility
+        private void button13_Click(object sender, EventArgs e)
+        {
+            Form2 ambilight = new Form2();
+            ambilight.Show(); //show form
         }
     }
 }
