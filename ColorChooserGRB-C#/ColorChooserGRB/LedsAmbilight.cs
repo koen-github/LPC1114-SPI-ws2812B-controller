@@ -17,6 +17,8 @@ namespace ColorChooserGRB
 {
     public partial class LedsAmbilight : Form
     {
+
+        //&koen&INSTALL SLIMDX TO USE THIS: http://slimdx.org/download.php, x86 version
         //40 on top
         //10 on both sides
 
