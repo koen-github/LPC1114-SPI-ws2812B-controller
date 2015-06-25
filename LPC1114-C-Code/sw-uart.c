@@ -4,18 +4,14 @@
 #include "LPC11xx.h"
 #include "sw-uart.h"
 #include "timer.h"
-#include "pin_functions.h"
 
+//USED SOURCE: WOUTER @Voti, HWCPP
    
 // UART line status register (LSR) bit definitions 
 static const unsigned int LSR_RDR   = 0x01;
-static const unsigned int LSR_OE    = 0x02;
-static const unsigned int LSR_PE    = 0x04;
-static const unsigned int LSR_FE    = 0x08;
-static const unsigned int LSR_BI    = 0x10;
 static const unsigned int LSR_THRE  = 0x20;
 static const unsigned int LSR_TEMT  = 0x40;
-static const unsigned int LSR_RXFE  = 0x80;
+
 static const int MHz  = 1000 * 1000;
 static const unsigned int clock_frequency = 48 * (1000 * 1000); //fast clock, for fast processing so we can use the SPI clock as input for the WS2812B
 
@@ -28,6 +24,8 @@ static void baudrate_set( unsigned int baud ){
 	LPC_UART->DLL = Fdiv % 256;    
 }
 
+//! Specify clock frequentie for LPC1114
+//! Not allowed to call outside this file
 static void initialize_clock(){
 	if( clock_frequency == 12 * MHz ){
 		// nothing required, this is the default
@@ -38,21 +36,20 @@ static void initialize_clock(){
 
 		if( clock_frequency == 48 * MHz ){
 
-		// as is, this can be done only once, 
-		// otherwise the CPU will lock up
+			// as is, this can be done only once, 
+			// otherwise the CPU will lock up
 
-		LPC_SYSCON->SYSAHBCLKDIV             = 0x1;       //set clock divider for core to 1
-		LPC_SYSCON->MAINCLKSEL               &= ~(0x03);  //set “main clock” to IRC oscillator, if not system will lock up when PLL turns off!(sec. 3.5.11)
-		LPC_SYSCON->MAINCLKUEN               &= ~(1);     //write a zero to the MAINCLKUEN register (sec. 3.5.12), necessary for MAINCLKSEL to update
-		LPC_SYSCON->MAINCLKUEN               |= 1;        //write a one to the MAINCLKUEN register (sec. 3.5.12), necessary for MAINCLKSEL to update
-		LPC_SYSCON->PDRUNCFG                 |= (1<<7);   //power down the PLL before changing divider values
-		LPC_SYSCON->SYSPLLCTRL               = 0x23;      //set MSEL = 0x00011 and PSEL = 0x01 (table 46 of sec. 3.11.4.1)
-		LPC_SYSCON->PDRUNCFG                 &= ~(1<<7);  //power up PLL after divider values changed as per sec. 3.11.4
-		while((LPC_SYSCON->SYSPLLSTAT & 1) == 0);         //wait for PLL to lock
-		LPC_SYSCON->MAINCLKSEL               = 0x03;      //set system oscillator to the output of the PLL (sec. 3.5.11)
-		LPC_SYSCON->MAINCLKUEN               &= ~(1);     //write a zero to the MAINCLKUEN register (sec. 3.5.12), necessary for MAINCLKSEL to update
-		LPC_SYSCON->MAINCLKUEN               |= 1;        //write a one to the MAINCLKUEN register (sec. 3.5.12)
-
+			LPC_SYSCON->SYSAHBCLKDIV             = 0x1;       //set clock divider for core to 1
+			LPC_SYSCON->MAINCLKSEL               &= ~(0x03);  //set “main clock” to IRC oscillator, if not system will lock up when PLL turns off!(sec. 3.5.11)
+			LPC_SYSCON->MAINCLKUEN               &= ~(1);     //write a zero to the MAINCLKUEN register (sec. 3.5.12), necessary for MAINCLKSEL to update
+			LPC_SYSCON->MAINCLKUEN               |= 1;        //write a one to the MAINCLKUEN register (sec. 3.5.12), necessary for MAINCLKSEL to update
+			LPC_SYSCON->PDRUNCFG                 |= (1<<7);   //power down the PLL before changing divider values
+			LPC_SYSCON->SYSPLLCTRL               = 0x23;      //set MSEL = 0x00011 and PSEL = 0x01 (table 46 of sec. 3.11.4.1)
+			LPC_SYSCON->PDRUNCFG                 &= ~(1<<7);  //power up PLL after divider values changed as per sec. 3.11.4
+			while((LPC_SYSCON->SYSPLLSTAT & 1) == 0);         //wait for PLL to lock
+			LPC_SYSCON->MAINCLKSEL               = 0x03;      //set system oscillator to the output of the PLL (sec. 3.5.11)
+			LPC_SYSCON->MAINCLKUEN               &= ~(1);     //write a zero to the MAINCLKUEN register (sec. 3.5.12), necessary for MAINCLKSEL to update
+			LPC_SYSCON->MAINCLKUEN               |= 1;        //write a one to the MAINCLKUEN register (sec. 3.5.12)
 		}
 	}
 }
@@ -80,12 +77,13 @@ void uart_init( void ){
 	LPC_SYSCON->SYSAHBCLKCTRL |= (1<<12);
 
 	LPC_UART->LCR = 0x83;             // 8 bits, no Parity, 1 Stop bit 
-	baudrate_set( BMPTK_BAUDRATE );
+	baudrate_set( BMPTK_BAUDRATE ); //baudrate specified by BMPTK
 	LPC_UART->LCR = 0x03;   // DLAB = 0 
 	LPC_UART->FCR = 0x07;   // Enable and reset TX and RX FIFO. 
 
 	// Read to clear the line status. 
 	(void)LPC_UART->LSR;
+	
 	// Ensure a clean start, no data in either TX or RX FIFO. 
 	while ( (LPC_UART->LSR & (LSR_THRE|LSR_TEMT)) != (LSR_THRE|LSR_TEMT) );
 	while ( LPC_UART->LSR & LSR_RDR )
@@ -94,6 +92,9 @@ void uart_init( void ){
 	} 
 }
 
+//! receives a single character
+//
+//! This function can receive a single char from via the RX, specify a pointer to a char in your local system
 void receive_char(unsigned char *out_c){
     while (!(LPC_UART->LSR & 0x01));    //RDR: Receiver Data Ready
                                         //0: RBR is empty, 1: U0RBR contains valid data

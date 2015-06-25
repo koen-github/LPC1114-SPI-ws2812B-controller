@@ -20,6 +20,9 @@ void uart_put_char( char c );
 //! using uart_put_char().
 void uart_put_string( char *s );
 
+//! receives a single character
+//
+//! This function can receive a single char from via the RX, specify a pointer to a char in your local system
 void receive_char(unsigned char *out_c);
 
 //! writes an integer in decimal format without leading zero's.
