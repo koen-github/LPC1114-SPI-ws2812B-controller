@@ -7,7 +7,7 @@
 //to send a 0, the line must be high for 450ns and low for 800ns
 
 //SPI LED_PATTERN
-#define led_one 15 //1111, inluding default low time, good 800ns high, and enough low
+#define led_one 15 //1111, including default low time, good 800ns high, and enough low
 #define led_zero 12 //1100, 450ns high, 800 low (more in this case)
 
 //Number of leds
