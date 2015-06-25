@@ -14,37 +14,41 @@ using System.Windows.Forms;
 
 namespace ColorChooserGRB
 {
-    public partial class Form1 : Form
+    public partial class LedsControl : Form
     {
 
-        [DllImport("user32.dll")]
-        static extern bool GetCursorPos(ref Point lpPoint);
 
-        [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
-        public static extern int BitBlt(IntPtr hDC, int x, int y, int nWidth, int nHeight, IntPtr hSrcDC, int xSrc, int ySrc, int dwRop);
 
         static bool blinkSleep;
         static bool mus;
         static bool blinkingDownOrUp;
         static bool clicked = false;
         static int intensity = 141; //default start value for intensity
+
         public static SerialPort LPC1114 = new SerialPort("COM4", 38400); //connection to LPC1114
         static String textLPC = "";
+
         static Color prevColor;
-        Bitmap screenPixel = new Bitmap(1, 1, PixelFormat.Format32bppArgb); //current color located under cursor
+
         static ColoRand ts = new ColoRand(); //generate random color
         List<Color> currentColor = new List<Color>();
         static bool cycleColor = false;
         static Label connectionMessage;
         static Color cycleColorOne;
         static Color cycleColorTwo;
-        int startpos = 0;
-        int NUMBER_OF_LEDS = 59;
-        String theColor;
+
+        static int startpos = 0;
+        static int NUMBER_OF_LEDS = 59;
+        static int kitt_indicer = 0;
+
         byte[] colorBytes = new byte[3];
         BackgroundWorker m_oWorker;
 
-        public Form1()
+        static bool kittStyle = false;
+        static bool randomPressed = false;
+
+
+        public LedsControl()
         {
             InitializeComponent();
 
@@ -83,29 +87,7 @@ namespace ColorChooserGRB
             m_oWorker.WorkerSupportsCancellation = true;
         }
 
-        public static Color ChangeColorBrightness(Color color, float correctionFactor)
-        {
-            float red = (float)color.R;
-            float green = (float)color.G;
-            float blue = (float)color.B;
 
-            if (correctionFactor < 0)
-            {
-                correctionFactor = 1 + correctionFactor;
-                red *= correctionFactor;
-                green *= correctionFactor;
-                blue *= correctionFactor;
-            }
-            else
-            {
-                red = (255 - red) * correctionFactor + red;
-                green = (255 - green) * correctionFactor + green;
-                blue = (255 - blue) * correctionFactor + blue;
-            }
-
-            return Color.FromArgb(color.A, (int)red, (int)green, (int)blue);
-
-        }
 
         private void change_brightness(int value)
         {
@@ -118,7 +100,7 @@ namespace ColorChooserGRB
                 {
                     foreach (Color col in currentColor)
                     {
-                        modiCols.Add(ChangeColorBrightness(col, normalized_value));
+                        modiCols.Add(ColorManipulations.ChangeColorBrightness(col, normalized_value));
 
                     }
                     // coltmp = modiCols;
@@ -127,22 +109,7 @@ namespace ColorChooserGRB
             }
         }
 
-        public Color GetColorAt(Point location)
-        {
-            using (Graphics gdest = Graphics.FromImage(screenPixel))
-            {
-                using (Graphics gsrc = Graphics.FromHwnd(IntPtr.Zero))
-                {
-                    IntPtr hSrcDC = gsrc.GetHdc();
-                    IntPtr hDC = gdest.GetHdc();
-                    int retval = BitBlt(hDC, 0, 0, 1, 1, hSrcDC, location.X, location.Y, (int)CopyPixelOperation.SourceCopy);
-                    gdest.ReleaseHdc();
-                    gsrc.ReleaseHdc();
-                }
-            }
 
-            return screenPixel.GetPixel(0, 0);
-        }
 
 
         private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
@@ -172,7 +139,7 @@ namespace ColorChooserGRB
                     tempCol[0] = col.G;
                     tempCol[1] = col.R;
                     tempCol[2] = col.B;
-                    LPC1114.Write(tempCol, 0, 3);
+                    LPC1114.Write(tempCol, 0, 3); //write color stream as GRB
                     //  String text = LPC1114.ReadLine();
                     //   if (text != "") {
                     //     MessageBox.Show("The text was: " + text);
@@ -195,40 +162,16 @@ namespace ColorChooserGRB
             write_color_stream(currentColor);
         }
 
-        public static List<Color> GetGradientColors(Color start, Color end, int steps)
-        {
-            return GetGradientColors(start, end, steps, 0, steps - 1);
-        }
 
-        public static List<Color> GetGradientColors(Color start, Color end, int steps, int firstStep, int lastStep)
-        {
-            var colorList = new List<Color>();
-            if (steps <= 0 || firstStep < 0 || lastStep > steps - 1)
-                return colorList;
 
-            double aStep = (end.A - start.A) / steps;
-            double rStep = (end.R - start.R) / steps;
-            double gStep = (end.G - start.G) / steps;
-            double bStep = (end.B - start.B) / steps;
 
-            for (int i = firstStep; i < lastStep; i++)
-            {
-                var a = start.A + (int)(aStep * i);
-                var r = start.R + (int)(rStep * i);
-                var g = start.G + (int)(gStep * i);
-                var b = start.B + (int)(bStep * i);
-                colorList.Add(Color.FromArgb(a, r, g, b));
-            }
-
-            return colorList;
-        }
 
         //set single color
         private void button2_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
-                List<Color> colooren = GetGradientColors(colorDialog1.Color, colorDialog1.Color, NUMBER_OF_LEDS + 1);
+                List<Color> colooren = ColorManipulations.GetGradientColors(colorDialog1.Color, colorDialog1.Color, NUMBER_OF_LEDS + 1);
                 currentColor = colooren;
 
                 button1.BackColor = colorDialog1.Color;
@@ -246,7 +189,7 @@ namespace ColorChooserGRB
                 if (colorDialog1.ShowDialog() == DialogResult.OK)
                 {
                     two = colorDialog1.Color;
-                    List<Color> colooren = GetGradientColors(one, two, NUMBER_OF_LEDS + 1);
+                    List<Color> colooren = ColorManipulations.GetGradientColors(one, two, NUMBER_OF_LEDS + 1);
                     currentColor = colooren;
                     write_color_stream(colooren);
                 }
@@ -259,7 +202,7 @@ namespace ColorChooserGRB
         {
             Color one = ts.RandomColor();
             Color two = ts.RandomColor();
-            List<Color> colooren = GetGradientColors(one, two, NUMBER_OF_LEDS + 1);
+            List<Color> colooren = ColorManipulations.GetGradientColors(one, two, NUMBER_OF_LEDS + 1);
             currentColor = colooren;
             write_color_stream(colooren);
 
@@ -267,9 +210,20 @@ namespace ColorChooserGRB
 
         private void button5_Click(object sender, EventArgs e)
         {
-            button5.Enabled = false;
-            button6.Enabled = true;
-            m_oWorker.RunWorkerAsync(); //start background worker, let the show begin..
+            if (randomPressed)
+            {
+                if (m_oWorker.IsBusy)
+                {
+                    m_oWorker.CancelAsync();
+                    randomPressed = false;
+                }
+            }
+            else
+            {
+                randomPressed = true;
+                m_oWorker.RunWorkerAsync(); //start background worker, let the show begin..
+            }
+            
         }
 
         void m_oWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -341,6 +295,46 @@ namespace ColorChooserGRB
                     }
                     write_color_stream(colooren);
                 }
+                else if (kittStyle) //kitt style display leds
+                {
+                    if (currentColor != null) {
+                        int middle = (NUMBER_OF_LEDS / 2);
+                        if (kitt_indicer == 0)
+                        {
+                            blinkingDownOrUp = true;
+
+                        }
+                        if (kitt_indicer == middle)
+                        {
+                            blinkingDownOrUp = false;
+                        }
+                        if (blinkingDownOrUp)
+                        {
+                            kitt_indicer++;
+                        }
+                        else
+                        {
+                            kitt_indicer--;
+                        }
+                        List<Color> colooren = new List<Color>();
+
+                        int start = middle - kitt_indicer;
+                        int end = middle + kitt_indicer;
+                        for (int i = 0; i < NUMBER_OF_LEDS; i++)
+                        {
+                            if (start <= i && i < end)
+                            {
+                                colooren.Add(currentColor[0]);
+                            }
+                            else
+                            {
+                                colooren.Add(Color.FromArgb(0, 0, 0));
+                            }
+
+                        }
+                        write_color_stream(colooren);
+                    }
+                }
 
                 else //start random color show
                 {
@@ -363,32 +357,39 @@ namespace ColorChooserGRB
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (m_oWorker.IsBusy)
+            if (kittStyle)
             {
-                m_oWorker.CancelAsync();
-                button5.Enabled = true;
-                button6.Enabled = false;
+                if (m_oWorker.IsBusy)
+                {
+                    m_oWorker.CancelAsync();
+                    kittStyle = false;
+                }
+            }
+            else
+            {
+                kittStyle = true;
+                m_oWorker.RunWorkerAsync(); //start background worker, let the show begin..
             }
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            List<Color> colooren = GetGradientColors(Color.FromArgb(0, 0, 0), Color.FromArgb(0, 0, 0), NUMBER_OF_LEDS + 1);
+            List<Color> colooren = ColorManipulations.GetGradientColors(Color.FromArgb(0, 0, 0), Color.FromArgb(0, 0, 0), NUMBER_OF_LEDS + 1);
             write_color_stream(colooren);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             Point cursor = new Point();
-            GetCursorPos(ref cursor);
+            ColorManipulations.GetCursorPos(ref cursor);
 
-            Color c = GetColorAt(cursor);
+            Color c = ColorManipulations.GetColorAt(cursor);
 
             this.BackColor = c;
             if (c != prevColor)
             {
                 prevColor = c;
-                List<Color> colooren = GetGradientColors(c, c, NUMBER_OF_LEDS + 1);
+                List<Color> colooren = ColorManipulations.GetGradientColors(c, c, NUMBER_OF_LEDS + 1);
                 write_color_stream(colooren);
             }
         }
@@ -442,6 +443,7 @@ namespace ColorChooserGRB
             LPC1114.Open();
         }
 
+        //allow only numbers
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
@@ -486,7 +488,7 @@ namespace ColorChooserGRB
         //Open form2, and enable AmbiLight possibility
         private void button13_Click(object sender, EventArgs e)
         {
-            Form2 ambilight = new Form2();
+            LedsAmbilight ambilight = new LedsAmbilight();
             ambilight.Show(); //show form
         }
     }

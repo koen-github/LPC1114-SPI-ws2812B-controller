@@ -1,6 +1,6 @@
 ﻿namespace ColorChooserGRB
 {
-    partial class Form1
+    partial class LedsControl
     {
         /// <summary>
         /// Required designer variable.
@@ -105,18 +105,17 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(67, 23);
             this.button5.TabIndex = 5;
-            this.button5.Text = "START";
+            this.button5.Text = "RANDOM";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
-            this.button6.Enabled = false;
             this.button6.Location = new System.Drawing.Point(127, 82);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(67, 23);
             this.button6.TabIndex = 6;
-            this.button6.Text = "STOP";
+            this.button6.Text = "KITT";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 

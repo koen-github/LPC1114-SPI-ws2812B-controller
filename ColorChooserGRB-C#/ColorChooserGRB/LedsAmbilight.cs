@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace ColorChooserGRB
 {
-    public partial class Form2 : Form
+    public partial class LedsAmbilight : Form
     {
         //40 on top
         //10 on both sides
@@ -44,12 +44,12 @@ namespace ColorChooserGRB
                     tempCol[0] = col.G;
                     tempCol[1] = col.R;
                     tempCol[2] = col.B;
-                    Form1.LPC1114.Write(tempCol, 0, 3);
+                    LedsControl.LPC1114.Write(tempCol, 0, 3);
                 }
             }
         }
 
-        public Form2()
+        public LedsAmbilight()
         {
             InitializeComponent();
 
@@ -218,7 +218,7 @@ namespace ColorChooserGRB
             write_color_stream(finalList);
             s.UnlockRectangle();
             s.Dispose();
-            Thread.Sleep(20);
+            Thread.Sleep(Convert.ToInt32(textBox1.Text));
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -235,7 +235,6 @@ namespace ColorChooserGRB
         {
             timer1.Stop();
         }
-
 
     }
 }
