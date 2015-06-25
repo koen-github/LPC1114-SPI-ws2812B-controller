@@ -46,6 +46,8 @@ namespace ColorChooserGRB
 
         static bool kittStyle = false;
         static bool randomPressed = false;
+        static bool fill_leds = false;
+        int filled_leds;
 
 
         public LedsControl()
@@ -174,7 +176,7 @@ namespace ColorChooserGRB
                 List<Color> colooren = ColorManipulations.GetGradientColors(colorDialog1.Color, colorDialog1.Color, NUMBER_OF_LEDS + 1);
                 currentColor = colooren;
 
-                button1.BackColor = colorDialog1.Color;
+                apply_color.BackColor = colorDialog1.Color;
             }
         }
 
@@ -263,7 +265,7 @@ namespace ColorChooserGRB
 
                     List<Color> colooren = new List<Color>();
 
-                    int otherLeds = 10;
+                    int otherLeds = Convert.ToInt32(textBox2.Text);
                     if (startpos + otherLeds == NUMBER_OF_LEDS)
                     {
                         blinkingDownOrUp = false;
@@ -335,7 +337,44 @@ namespace ColorChooserGRB
                         write_color_stream(colooren);
                     }
                 }
+                else if (fill_leds)
+                {
+                    if (currentColor != null)
+                    {
+                        List<Color> colooren = new List<Color>();
+                        if (filled_leds == NUMBER_OF_LEDS)
+                        {
+                            fill_leds = false;
+                            m_oWorker.CancelAsync();
+                            break;
+                        }
+                        if ((NUMBER_OF_LEDS - filled_leds) == startpos)
+                        {
+                            filled_leds++;
+                            startpos = 0;
+                        }
+                        for (int i = 0; i < NUMBER_OF_LEDS; i++)
+                        {
+                            if (i >= (NUMBER_OF_LEDS - filled_leds))
+                            {
+                                colooren.Add(currentColor[0]);
+                            }
+                            else if (startpos == i)
+                            {
+                                colooren.Add(currentColor[0]);
+                            }
+                            else
+                            {
+                                colooren.Add(Color.FromArgb(0, 0, 0));
+                            }
 
+                        }
+
+                        startpos++;
+                        write_color_stream(colooren);
+
+                    }
+                }
                 else //start random color show
                 {
                     Random _r = new Random();
@@ -451,9 +490,13 @@ namespace ColorChooserGRB
             {
                 e.Handled = true;
             }
+        }
 
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+        //allow only numbers
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+                (e.KeyChar != '.'))
             {
                 e.Handled = true;
             }
@@ -490,6 +533,23 @@ namespace ColorChooserGRB
         {
             LedsAmbilight ambilight = new LedsAmbilight();
             ambilight.Show(); //show form
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (fill_leds == false)
+            {
+                fill_leds = true;
+                m_oWorker.RunWorkerAsync();
+            }
+            else
+            {
+                if (m_oWorker.IsBusy)
+                {
+                    fill_leds = false;
+                    m_oWorker.CancelAsync();
+                }
+            }
         }
     }
 }

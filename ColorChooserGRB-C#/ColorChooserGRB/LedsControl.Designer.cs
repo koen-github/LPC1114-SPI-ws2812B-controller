@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LedsControl));
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.button1 = new System.Windows.Forms.Button();
+            this.apply_color = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -44,10 +45,13 @@
             this.button11 = new System.Windows.Forms.Button();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button14 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -59,15 +63,15 @@
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // apply_color
             // 
-            this.button1.Location = new System.Drawing.Point(6, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(188, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "APPLY COLOR";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.apply_color.Location = new System.Drawing.Point(6, 19);
+            this.apply_color.Name = "apply_color";
+            this.apply_color.Size = new System.Drawing.Size(188, 23);
+            this.apply_color.TabIndex = 0;
+            this.apply_color.Text = "APPLY COLOR";
+            this.apply_color.UseVisualStyleBackColor = true;
+            this.apply_color.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -184,6 +188,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.trackBar1);
@@ -193,6 +199,24 @@
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Brightness || Intervals";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 82);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "Cycle Leds:";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(94, 79);
+            this.textBox2.MaxLength = 100;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 15;
+            this.textBox2.Text = "10";
             // 
             // label1
             // 
@@ -214,7 +238,7 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.apply_color);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.button4);
@@ -227,6 +251,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button14);
             this.groupBox3.Controls.Add(this.button13);
             this.groupBox3.Controls.Add(this.button12);
             this.groupBox3.Controls.Add(this.button9);
@@ -239,6 +264,16 @@
             this.groupBox3.TabIndex = 15;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Animations";
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(79, 53);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(42, 23);
+            this.button14.TabIndex = 12;
+            this.button14.Text = "FILL";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // button13
             // 
@@ -282,17 +317,19 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "PRESS RESET BUTTON";
             // 
-            // Form1
+            // LedsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(463, 303);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Name = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "LedsControl";
             this.Text = "WS2812B Controller";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -308,7 +345,7 @@
         #endregion
 
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button apply_color;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
@@ -330,6 +367,9 @@
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button14;
     }
 }
 
