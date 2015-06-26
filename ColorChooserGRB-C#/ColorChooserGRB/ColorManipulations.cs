@@ -11,6 +11,7 @@ namespace ColorChooserGRB
 {
     class ColorManipulations
     {
+        //USED SOURCE FOR MOUSE LOCATION CURSOR: http://stackoverflow.com/questions/1483928/how-to-read-the-color-of-a-screen-pixel
         //used for mouse location and color
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(ref Point lpPoint);

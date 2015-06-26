@@ -452,7 +452,10 @@ namespace ColorChooserGRB
             if (blinkSleep == false)
             {
                 blinkSleep = true;
-                m_oWorker.RunWorkerAsync();
+                if (!m_oWorker.IsBusy)
+                {
+                    m_oWorker.RunWorkerAsync();
+                }
             }
             else
             {
